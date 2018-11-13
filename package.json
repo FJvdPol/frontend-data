@@ -9,6 +9,7 @@
     "d3": "^5.7.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "http-server": "^0.11.1",
     "xml-to-json-promise": "0.0.3"
   },
   "devDependencies": {
@@ -34,7 +35,12 @@
     ],
     "rules": {
       "prettier/prettier": "error",
-      "unicorn/catch-error-name": ["error", {"name": "err"}],
+      "unicorn/catch-error-name": [
+        "error",
+        {
+          "name": "err"
+        }
+      ],
       "linebreak-style": 0
     }
   },

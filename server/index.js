@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const OBA = require('../api/oba-api.js')
 const helper = require('../api/helpers.js')
+// require('util').inspect.defaultOptions.depth = 2
 
 require('dotenv').config()
 
@@ -31,7 +32,7 @@ oba
       2017
     ],
     {
-      q: 'genre:school'
+      q: 'genre:erotiek'
     }
   )
   .then(response => {
@@ -42,28 +43,31 @@ oba
         []
       )
   })
-  .then(data => {
-    return data.map(book => {
-      return {
+  .then(data => data.map(book => (
+      {
         title: book.titles[0].title[0]._,
-        publication: helper.getYear(book),
+        author: helper.getAuthor(book),
+        year: helper.getYear(book),
+        place: helper.getPlace(book),
+        publisher: helper.getPublisher(book),
         language: helper.getLanguage(book)
       }
-    })
-  })
+    ))
+  )
   .then(data => {
-    fs.writeFile(
-      path.join(__dirname, '/..static/data.json'),
-      JSON.stringify(data),
-      'utf-8',
-      err => {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('File has been created')
-        }
-      }
-    )
+    console.log(data[0])
+    // fs.writeFile(
+    //   path.join(__dirname, '/..static/data.json'),
+    //   JSON.stringify(data),
+    //   'utf-8',
+    //   err => {
+    //     if (err) {
+    //       console.log(err)
+    //     } else {
+    //       console.log('File has been created')
+    //     }
+    //   }
+    // )
   })
   .catch(err => {
     if (err.response) {

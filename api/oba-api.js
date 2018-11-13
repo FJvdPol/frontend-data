@@ -79,11 +79,9 @@ class API {
     return new Promise((resolve, reject) => {
       this.getUrls(years, params)
         .then(response => {
-          console.log(response)
           resolve(response)
         })
         .catch(err => {
-          console.log(err)
           reject(err)
         })
     })
