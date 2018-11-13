@@ -55,19 +55,18 @@ oba
     ))
   )
   .then(data => {
-    console.log(data[0])
-    // fs.writeFile(
-    //   path.join(__dirname, '/..static/data.json'),
-    //   JSON.stringify(data),
-    //   'utf-8',
-    //   err => {
-    //     if (err) {
-    //       console.log(err)
-    //     } else {
-    //       console.log('File has been created')
-    //     }
-    //   }
-    // )
+    fs.writeFile(
+      path.join(__dirname, '/../static/data.json'),
+      JSON.stringify(data),
+      'utf-8',
+      err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('File has been created')
+        }
+      }
+    )
   })
   .catch(err => {
     if (err.response) {
