@@ -19,7 +19,7 @@ module.exports = {
 
   getYear: book => book.publication[0].year[0]._,
 
-  getPlace: book => book.publication[0].publishers[0].publisher[0]['$'].place.replace(/[^a-zA-Z]+/g, ''),
+  getPlace: book => book.publication[0].publishers[0].publisher[0]['$'].place.replace(/[^a-zA-Z,\s]+/g, ''),
 
   getPublisher: book => book.publication[0].publishers[0].publisher[0]._,
 
