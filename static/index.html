@@ -9,11 +9,35 @@
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
-  <div id='map' style='width: calc(100vw - 20rem); margin-left: 20rem; height: 100vh;'></div>
 
+  <div id="app" :class="loaded ? 'loaded' : ''">
+    <div id="map" style="width: 100vw; height: 100vh;"></div>
+
+    <div class="metadata-holder">
+      <div class="city" v-if="city.name && loaded">
+        <button @click="city.name = ''" class="close">close</button>
+        <h2>{{city.name}}</h2>
+        <ul class="city-info">
+
+          <city :text="city.name"></city>
+          <total :text="city.total"></total>
+        </ul>
+      </div>
+      <div class="explanation" v-if="loaded && !city.name">
+        <h2>Click on any bubble to see the city name and total amount of books from there</h2>
+      </div>
+      <loader v-if="!loaded" :text="'Loading data...'"></loader>
+    </div>
+
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="//d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
   <script src="https://d3js.org/d3.v5.js"></script>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+  <script src="components.js"></script>
   <script src="visualization.js"></script>
 
 

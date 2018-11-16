@@ -1,8 +1,17 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  --color-main: #00305C;
+  --color-light: #5C7A97;
+  --color-dark: #001E3B;
+  --color-ultra-light: #DDE4E9;
+  --color-accent: #FA9B59;
+}
 body {
   margin: 0;
+  font-family: sans-serif;
+  color: var(--color-main);
 }
 svg {
   position: absolute;
@@ -13,9 +22,120 @@ circle {
   opacity: 0.5;
   stroke-width: 0;
   cursor: pointer;
-  transition: 0.5s fill, 0.5s stroke-width;
+  transition: 0.5s fill, 0.5s stroke, 0.5s stroke-width, 0.5s opacity;
 }
 circle:hover {
-  opacity: 1;
-  stroke-width: 18;
+  opacity: 0.8;
+  stroke-width: 10;
+}
+#app {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: var(--color-dark);
+}
+#app .metadata-holder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 1.5rem;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.6);
+  transition: width 0.8s, min-height 0.8s, height 0.5s, top 0.8s, left 0.8s, background-color 0.3s;
+}
+#app.loaded .metadata-holder {
+  top: 2rem;
+  left: 2rem;
+  min-height: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow: hidden;
+  width: 30rem;
+  border-radius: 25px;
+  background-color: rgba(255,255,255,0.8);
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+h2 {
+  color: var(--color-main);
+  font-size: 1.5rem;
+}
+.explanation h2 {
+  font-size: 1rem;
+  font-weight: normal;
+}
+h3 {
+  color: var(--color-light);
+}
+p {
+  color: var(--color-light);
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  height: auto;
+}
+ul.book-list {
+  height: 100%;
+  max-height: 50vh;
+  overflow: scroll;
+  background-color: var(--color-ultra-light);
+  padding: 0.5rem;
+}
+ul.book-list li {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.close {
+  border: 0;
+  background: 0;
+  -webkit-appearance: none;
+  color: var(--color-main);
+  cursor: pointer;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+ul.book-list p {
+  margin: 0;
+  display: block;
+  padding: 0 0.5rem;
+  width: 5rem;
+}
+ul.book-list p:last-of-type {
+  text-align: right;
+}
+ul.book-list p:first-of-type {
+  margin-left: auto;
+}
+ul.book-list h4 {
+  margin: 0;
+  display: block;
+  padding-right: 0.5rem;
+  max-width: calc(100% - 10rem);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+li {
+  color: var(--color-light);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  line-height: 1.5;
+}
+li span {
+  color: var(--color-main);
+  width: calc(100% - 4rem);
+  font-weight: bold;
 }

@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const OBA = require('../api/oba-api.js')
 const helper = require('../api/helpers.js')
-// require('util').inspect.defaultOptions.depth = 2
 
 require('dotenv').config()
 
