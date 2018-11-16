@@ -32,7 +32,7 @@ oba
       2017
     ],
     {
-      q: 'genre:erotiek'
+      q: 'genre:school'
     }
   )
   .then(response => {
@@ -43,20 +43,19 @@ oba
         []
       )
   })
-  .then(data => data.map(book => (
-      {
-        title: book.titles[0].title[0]._,
-        author: helper.getAuthor(book),
-        year: helper.getYear(book),
-        place: helper.getPlace(book),
-        publisher: helper.getPublisher(book),
-        language: helper.getLanguage(book)
-      }
-    ))
+  .then(data =>
+    data.map(book => ({
+      title: book.titles[0].title[0]._,
+      author: helper.getAuthor(book),
+      year: helper.getYear(book),
+      place: helper.getPlace(book),
+      publisher: helper.getPublisher(book),
+      language: helper.getLanguage(book)
+    }))
   )
   .then(data => {
     fs.writeFile(
-      path.join(__dirname, '/../static/data.json'),
+      path.join(__dirname, '/../static/data/data.json'),
       JSON.stringify(data),
       'utf-8',
       err => {
