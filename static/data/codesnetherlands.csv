@@ -1,4 +1,4 @@
-id,postcode,"woonplaats","alternatieve_schrijfwijzen","gemeente","provincie","netnummer",latitude,longitude,"soort"
+id,postcode,city,"alternatieve_schrijfwijzen","gemeente","provincie","netnummer",lat,lng,"soort"
 1,1000,"Amsterdam","","Amsterdam","Noord-Holland","020",52.3362429,4.8694444,"Postbus"
 2,1001,"Amsterdam","","Amsterdam","Noord-Holland","020",52.36424,4.883358,"Postbus"
 3,1002,"Amsterdam","","Amsterdam","Noord-Holland","020",52.36424,4.883358,"Onbekend"

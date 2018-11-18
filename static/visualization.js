@@ -11,27 +11,34 @@ const map = new mapboxgl.Map({
 map.on('load', () => {
   Promise.all([
     d3.csv('data/codesnetherlands.csv'),
-    d3.json('data/data.json')
+    d3.csv('data/worldcities.csv'),
+    d3.json('data/schooldata.json')
   ]).then(results => {
     const data = {}
 
-    const coordinates = results[0]
-      .map(obj => ({
-        name: obj.woonplaats,
-        lat: obj.latitude,
-        long: obj.longitude
-      }))
-      .filter(
-        (obj, index, total) =>
-          total.findIndex(t => t.name === obj.name) === index
-      )
+    const coordinates = results[0].concat(results[1])
+      // .map(obj => ({
+      //   name: obj.city, // Woonplaats
+      //   lat: obj.lat, // latitude
+      //   long: obj.lng // longitude
+      // }))
+      // .filter(
+      //   (obj, index, total) =>
+      //     total.findIndex(t => t.name.toLowerCase() === obj.name.toLowerCase()) === index
+      // )
 
-    data.total = results[1].length
 
-    data.booksWithCity = results[1]
+    data.total = results[2].length
+
+    data.allCities = d3
+      .nest()
+      .key(book => book.place)
+      .entries(results[2])
+
+    data.booksWithCity = results[2]
       .map(book => {
-        const match = coordinates.find(place => place.name === book.place)
-        return match ? { ...book, coords: [+match.long, +match.lat] } : book
+        const match = coordinates.find(place => place.city.toLowerCase() === book.place.toLowerCase())
+        return match ? { ...book, coords: [+match.lng, +match.lat] } : book
       })
       .filter(book => book.coords)
 
@@ -50,14 +57,18 @@ map.on('load', () => {
 
     drawData(data)
   })
+  .catch(err => {
+    console.log(err)
+  })
 })
+
 
 const drawData = data => {
   console.log(data)
   vueData.loaded = true
 
   map.flyTo({
-    zoom: 7,
+    zoom: 6,
     speed: 0.4
   })
 
@@ -67,7 +78,9 @@ const drawData = data => {
   // Get Mapbox map canvas container // jorditost
   const canvas = map.getCanvasContainer()
 
-  const startZoom = 7
+  const startZoom = 6
+
+  const minSize = 5
 
   // Overlay d3 on the map
   const svg = d3
@@ -97,7 +110,8 @@ const drawData = data => {
     map.flyTo({
       center: [city.coords[0], city.coords[1]],
       speed: 0.3,
-      curve: 2
+      curve: 2,
+      zoom: 7
     })
   }
 
@@ -109,8 +123,6 @@ const drawData = data => {
     .append('circle')
     .attr('r', 16)
     .on('click', (d, i, all) => showCity(d, i, all))
-    .transition()
-    .duration(0)
     .attr('cx', d => project(d.coords).x)
     .attr('cy', d => project(d.coords).y)
 
@@ -123,7 +135,7 @@ const drawData = data => {
       .transition()
       .duration(transitionTime)
       .attr('r', d =>
-        (d.total * radiusExp) / 10 + 3 > 0 ? (d.total * radiusExp) / 10 + 3 : 0
+        (d.total * radiusExp) / 10 + minSize > minSize ? (d.total * radiusExp) / 10 + minSize : minSize
       )
       .attr('cx', d => project(d.coords).x)
       .attr('cy', d => project(d.coords).y)

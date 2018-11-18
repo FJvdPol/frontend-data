@@ -23,7 +23,7 @@ module.exports = {
     book.publication[0].publishers[0].publisher[0].$.place.replace(
       /[^a-zA-Z,\s]+/g,
       ''
-    ),
+    ).trim().split(',')[0],
 
   getPublisher: book => book.publication[0].publishers[0].publisher[0]._,
 

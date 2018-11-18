@@ -31,7 +31,7 @@ oba
       2017
     ],
     {
-      q: 'genre:school'
+      q: 'genre:erotiek'
     }
   )
   .then(response => {
