@@ -26,7 +26,7 @@ circle {
 }
 circle:hover {
   opacity: 0.8;
-  stroke-width: 10;
+  stroke-width: 5;
 }
 #app {
   position: fixed;
@@ -39,12 +39,12 @@ circle:hover {
 }
 #app .metadata-holder {
   position: absolute;
-  top: 0;
+  top: 4rem;
   left: 0;
   height: auto;
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
   width: 100vw;
-  padding: 1.5rem;
+  padding: 0rem 1.5rem;
   border-radius: 0;
   display: flex;
   flex-direction: column;
@@ -54,16 +54,52 @@ circle:hover {
   transition: width 0.8s, min-height 0.8s, height 0.5s, top 0.8s, left 0.8s, background-color 0.3s;
 }
 #app.loaded .metadata-holder {
-  top: 2rem;
-  left: 2rem;
   min-height: 2rem;
-  max-height: calc(100vh - 4rem);
+  max-height: 100vh;
   overflow: hidden;
-  width: 30rem;
-  border-radius: 25px;
+  width: 20rem;
   background-color: rgba(255,255,255,0.8);
   justify-content: flex-start;
   align-items: flex-start;
+}
+#app #genre {
+  position: fixed;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  padding: 1rem 1.5rem;
+  /* background-color: rgba(255,255,255,0.8); */
+  color: var(--color-ultra-light);
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+#app.loaded #genre {
+  opacity: 1;
+}
+#genre p {
+  display: block;
+  margin-right: 0.5rem;
+}
+label + select {
+  margin-left: 0.5rem;
+}
+.input-holder {
+  display: flex;
+  align-items: center;
+
+}
+select {
+  -webkit-appearance: none;
+  background: none;
+  background-color: var(--color-ultra-light);
+  border: 1px solid var(--color-main);
+  border-radius: 25px;
+  padding: 1rem 0.75rem;
+  color: var(--color-main);
 }
 h2 {
   color: var(--color-main);
@@ -85,16 +121,10 @@ ul {
   width: 100%;
   height: auto;
 }
-ul.book-list {
-  height: 100%;
-  max-height: 50vh;
-  overflow: scroll;
-  background-color: var(--color-ultra-light);
-  padding: 0.5rem;
-}
-ul.book-list li {
+.city-info {
   display: flex;
-  margin-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
 }
 .close {
   border: 0;
@@ -106,26 +136,6 @@ ul.book-list li {
   top: 1.5rem;
   right: 1.5rem;
 }
-ul.book-list p {
-  margin: 0;
-  display: block;
-  padding: 0 0.5rem;
-  width: 5rem;
-}
-ul.book-list p:last-of-type {
-  text-align: right;
-}
-ul.book-list p:first-of-type {
-  margin-left: auto;
-}
-ul.book-list h4 {
-  margin: 0;
-  display: block;
-  padding-right: 0.5rem;
-  max-width: calc(100% - 10rem);
-  font-size: 1rem;
-  font-weight: 500;
-}
 
 li {
   color: var(--color-light);
@@ -133,9 +143,15 @@ li {
   display: flex;
   justify-content: space-between;
   line-height: 1.5;
+  margin-right: 0.5rem;
 }
 li span {
+  margin-left: 0.25rem;
   color: var(--color-main);
-  width: calc(100% - 4rem);
   font-weight: bold;
+}
+@media screen and (max-width: 40rem){
+  #app.loaded .metadata-holder {
+    width: 100%;
+  }
 }

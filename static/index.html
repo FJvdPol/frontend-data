@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Frontend Data</title>
   <link rel="stylesheet" href="style.css">
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
 </head>
+
 <body>
 
   <div id="app" :class="loaded ? 'loaded' : ''">
-    <div id="map" style="width: 100vw; height: 100vh;"></div>
+    <div id="map" style="width: 100vw; height: calc(100vh - 4rem); margin-top: 4rem;"></div>
+
+    <div id="genre">
+      <p>Total: {{data.amount}}</p>
+      <div class="input-holder">
+        <label for="genrechoice">Choose genre:</label>
+        <select @change="changeFilter" name="genrechoice" id="">
+          <option value="all">All genres</option>
+          <option v-for="genre in data.genres" :value="genre">{{genre}}</option>
+        </select>
+      </div>
+
+    </div>
 
     <div class="metadata-holder">
       <div class="city" v-if="city.name && loaded">
         <button @click="city.name = ''" class="close">close</button>
         <h2>{{city.name}}</h2>
         <ul class="city-info">
-
-          <city :text="city.name"></city>
           <total :text="city.total"></total>
         </ul>
       </div>
@@ -42,4 +54,5 @@
 
 
 </body>
+
 </html>

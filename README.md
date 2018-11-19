@@ -71,3 +71,4 @@ If I have enough time I'd like to add charts that show the ratio of languages an
 * [locations for all countries on maps](https://developers.google.com/public-data/docs/canonical/countries_csv)
 * [locations for alot of cities per country](https://simplemaps.com/data/world-cities)
 * [zipcodes with lat and long coordinates of places in the netherlands](https://github.com/bobdenotter/4pp)
+* [LocationIQ location API](https://locationiq.com/)
