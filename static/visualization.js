@@ -18,17 +18,17 @@ map.on('load', () => {
 		.then(results => {
 			const coordinates = results[0].concat(results[1])
 
-            const hasPublication = results[2]
-        		.filter(book => book.publication.place && book.publication.publisher)
-        		.map(book => {
-        			book.publication.place = book.publication.place
-        				.replace(/[^a-zA-Z,\s]+/g, '')
-        				.trim()
-        				.split(',')[0]
-        			return book
-        		})
+			const hasPublication = results[2]
+				.filter(book => book.publication.place && book.publication.publisher)
+				.map(book => {
+					book.publication.place = book.publication.place
+						.replace(/[^a-zA-Z,\s]+/g, '')
+						.trim()
+						.split(',')[0]
+					return book
+				})
 
-            const genres = hasPublication
+			const genres = hasPublication
 				.map(book => book.genres)
 				.reduce((total, bookGenres) => total.concat(bookGenres), [])
 				.sort()
@@ -42,14 +42,14 @@ map.on('load', () => {
 				coordinates: coordinates
 			}
 
-			init(state.data.cities)
+			createCircles(state.data.cities)
 		})
 		.catch(err => {
 			console.log(err)
 		})
 })
 
-function init(data) {
+function createCircles(data) {
 	const mapPointColor = '#BBE4A0'
 
 	state.loaded = true
@@ -106,9 +106,12 @@ function updateCircles(data) {
 		.attr('r', 0)
 		.attr('cx', d => project(d.coords).x)
 		.attr('cy', d => project(d.coords).y)
-		.on('click', (d, i, all) => showCity(d, i, all))
+		.on('click', (d, i, all) => {
+			console.log(d)
+			return showCity(d, i, all)
+		})
 		.transition()
-        .delay(transition)
+		.delay(transition)
 		.duration(transition)
 		.attr('r', d => getRadius(d.total))
 
@@ -145,8 +148,10 @@ function getRadius(amount) {
 }
 
 function showCity(city, index, all) {
+	console.log(city)
 	state.city.name = city.key
-	state.city.total = city.total
+	state.city.amount = city.total
+	state.city.publishers = city.values.map(publisher => publisher.values.length)
 
 	d3.selectAll('circle')
 		.style('fill', '')
@@ -188,7 +193,7 @@ function groupCities(data, coordinates) {
 	return cities
 }
 
-function filterCities(genre) {
+function filterGenre(genre) {
 	console.log('filtering...')
 	let data
 	if (genre === 'all') {
@@ -203,4 +208,86 @@ function filterCities(genre) {
 	state.data.cities = groupCities(data, state.data.coordinates)
 	state.data.amount = data.length
 	updateCircles(state.data.cities)
+}
+
+function getPieWidth() {
+	return (window.innerWidth - 100) / 2 > 150 ? 150 : (window.innerWidth - 100) / 2
+}
+
+function updatePie(element, data) {
+	console.log(element, data)
+	const color = d3.scaleOrdinal()
+		.domain(data)
+		.range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length + 1))
+
+	const radius = getPieWidth() / 2
+
+	const arc = d3
+		.arc()
+		.outerRadius(radius)
+		.innerRadius(0)
+
+	const pie = d3
+		.pie()
+		.sort((a, b) => a - b)
+		.value(d => d)
+
+	const chart = d3.select(`#${element} .parent`)
+
+	const path = chart
+		.selectAll('path')
+		.data(pie(data))
+
+	path.enter()
+		.append('g')
+		.classed('arc', true)
+		.append('path')
+		.attr('d', arc)
+		.style('fill', (d, i) => color(i))
+		// saves initial arc value // Mike Bostock (https://bl.ocks.org/mbostock/1346410)
+		.each((d, i, all) => all[i]._current = d)
+		.transition()
+		.duration(500)
+		.attrTween('d', enterTween)
+
+
+	path
+		.transition()
+		.style('fill', (d, i) => color(i))
+		.duration(500)
+		// redraw the arcs
+		.attrTween('d', arcTween)
+
+	path
+		.exit()
+		.remove()
+
+	// same as next function but still don't know how to work with next function to go from 0 on enter
+	function enterTween(d) {
+		d.innerRadius = 0;
+		var i = d3.interpolate({startAgnle: 0, endAngle: 0}, d)
+		return (t) => arc(i(t))
+	}
+	// interpolate between previous endpoint of datapoint arc and new endpoint
+	// Mike Bostock (https://bl.ocks.org/mbostock/1346410)
+	function arcTween(d) {
+	  const i = d3.interpolate(this._current, d)
+	  this._current = i(0)
+	  return (t) => arc(i(t))
+	}
+}
+
+function drawPie(element, data) {
+	const height = getPieWidth()
+	const width = getPieWidth()
+
+	d3.select(`#${element}`)
+		.append('svg')
+		.attr('width', width)
+		.attr('height', height)
+		.append('g')
+		.classed('parent', true)
+		.attr('transform', `translate(${width / 2}, ${height / 2})`)
+
+	updatePie(element, data)
 }

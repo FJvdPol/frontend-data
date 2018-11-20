@@ -9,7 +9,8 @@ const state = {
 	},
 	city: {
 		name: '',
-		total: null
+		amount: 0,
+		publishers: []
 	}
 }
 
@@ -25,7 +26,7 @@ Vue.component('city', {
 
 Vue.component('total', {
 	props: ['text'],
-	template: '<li>total: <span>{{ text }}</span></li>'
+	template: '<li>Total: <span>{{ text }}</span></li>'
 })
 
 Vue.component('bookrow', {
@@ -33,13 +34,32 @@ Vue.component('bookrow', {
 	template:
 		'<li><h4>{{ book.title }}</h4><p>{{ book.publisher ? book.publisher : " " }}</p><p>{{ book.year }}</p></li>'
 })
+Vue.component('test', {
+	props: ['id'],
+	template: '<p>Test: {{this.id}}</p>'
+})
+
+Vue.component('pie-chart', {
+	props: ['data', 'id'],
+	mounted() {
+		drawPie(this.id, this.data)
+	},
+	watch: {
+		data() {
+			updatePie(this.id, this.data)
+		}
+	},
+	template: '<div :id="this.id"></div>'
+})
 
 const app = new Vue({
 	el: '#app',
-	data: state,
+	data() {
+		return state
+	},
 	methods: {
 		changeFilter: e => {
-            filterCities(e.target.value)
-        }
+			filterGenre(e.target.value)
+		}
 	}
 })
