@@ -37,18 +37,25 @@ function createCircles(data) {
 	const mapPointColor = '#BBE4A0'
 
 	// Get Mapbox map canvas container // jorditost
-	const canvas = map.getCanvasContainer()
+	const chart = d3.select(map.getCanvasContainer())
 
-	const svg = d3
-		.select(canvas)
+	chart
+		.append('div')
+		.classed('tooltip', true)
+		.style('opacity', 0)
+		.append('h4')
+
+	const svg = chart
 		.append('svg')
+
+	svg
 		.append('g')
 		.attr('fill', mapPointColor)
 		.attr('stroke', mapPointColor)
 
-	updateCircles(data)
+	updateCircles('map', data)
 
-	updateMap()
+	updateMap('map')
 
 	// Update on map interaction
 	map.on('viewreset', () => updateMap())
@@ -57,11 +64,12 @@ function createCircles(data) {
 	map.on('zoom', () => updateMap())
 }
 
-function updateCircles(data) {
+function updateCircles(element, data) {
 	const transition = 300
 
-	const circles = d3
-		.select('g')
+	const chart = d3.select(`#${element} svg g`)
+
+	const circles = chart
 		.selectAll('circle')
 		.data(data)
 
@@ -83,7 +91,12 @@ function updateCircles(data) {
 		.attr('r', 0)
 		.attr('cx', d => project(d.coords).x)
 		.attr('cy', d => project(d.coords).y)
-		.on('click', (d, i, all) => showCity(d, i, all))
+		.on('mouseover', d => showTooltip(element, `${d.key}: ${d.total} books`))
+		.on('mouseout', () => hideTooltip(element))
+		.on('click', (d, i, all) => {
+			hideTooltip(element)
+			showCity(d, i, all)
+		})
 		.transition()
 		.delay(transition)
 		.duration(transition)
@@ -113,13 +126,34 @@ function getRadius(amount) {
 }
 
 function updateMap() {
-	d3.select('g')
+	const element = 'map'
+
+	d3.select(`#${element} g`)
 		.selectAll('circle')
 		.transition()
 		.duration(0)
 		.attr('cx', d => project(d.coords).x)
 		.attr('cy', d => project(d.coords).y)
 		.attr('r', d => getRadius(d.total))
+}
+
+// === TOOLTIP FUNCTIONS === //
+function showTooltip(element, text) {
+	d3.select(`#${element} .tooltip`)
+		.style('left', `${d3.event.pageX}px`) // dennis
+		.style('top', `${d3.event.pageY - 30}px`) // dennis
+		.transition()
+		.duration(300)
+		.style('opacity', 0.8)
+		.select('h4')
+		.text(text)
+}
+
+function hideTooltip(element) {
+	d3.select(`#${element} .tooltip`)
+		.transition()
+		.duration(300)
+		.style('opacity', 0)
 }
 
 // === PIE CHART FUNCTIONS === //
@@ -154,6 +188,7 @@ function updatePie(element, data) {
 		.domain([0, Math.round(data.length / 2), data.length])
 		.range(['#BBE4A0', '#52A8AF', '#00305C'])
 
+
 	const radius = getPieWidth() / 2
 
 	// http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html
@@ -178,7 +213,7 @@ function updatePie(element, data) {
 		.classed('arc', true)
 		.append('path')
 		.attr('title', (d, i) => d.data.title)
-		.on('mouseover', d => showTooltip(element, d))
+		.on('mouseover', d => showTooltip(element, `${d.data.title}: ${d.value} books`))
 		.on('mouseout', () => hideTooltip(element))
 		.style('fill', (d, i) => color(i))
 		// saves initial arc value // Mike Bostock (https://bl.ocks.org/mbostock/1346410)
@@ -209,24 +244,6 @@ function updatePie(element, data) {
 		this._current = i(0)
 		return t => arc(i(t))
 	}
-
-	function showTooltip(element, d) {
-		d3.select(`#${element} .tooltip`)
-			.style('left', `${d3.event.pageX}px`) // dennis
-			.style('top', `${d3.event.pageY - 30}px`) // dennis
-			.transition()
-			.duration(300)
-			.style('opacity', 0.8)
-			.select('h4')
-			.text(`${d.data.title}: ${d.value}`)
-	}
-
-	function hideTooltip(element) {
-		d3.select(`#${element} .tooltip`)
-			.transition()
-			.duration(300)
-			.style('opacity', 0)
-	}
 }
 
 // Makes sure the pie charts (which are rendered next to eachother) don't exceed their container limit.
@@ -250,14 +267,19 @@ function showCity(city, index, all) {
 
 	// Make the clicked circle a different color
 	d3.selectAll('circle')
-		.style('fill', '')
-		.style('stroke', '')
+		// .style('fill', '')
+		// .style('stroke', '')
+		.style('opacity', '')
 	d3.select(all[index])
-		.style('fill', 'var(--color-accent)')
-		.style('stroke', 'var(--color-accent)')
+		// .style('fill', 'var(--color-accent)')
+		// .style('stroke', 'var(--color-accent)')
+		.style('opacity', 1)
 
+	const center = window.innerWidth > 40 * 16
+		? [city.coords[0], city.coords[1]]
+		: [city.coords[0], city.coords[1] - 0.25]
 	map.flyTo({
-		center: [city.coords[0], city.coords[1]],
+		center,
 		speed: 0.3,
 		curve: 2,
 		zoom: 8
@@ -280,7 +302,10 @@ function formatData(results) {
 			book.publication.publisher = book.publication.publisher
 				.replace(/[^a-zA-Z,\s]+/g, '')
 				.replace('Uitgeverij', '')
+				.replace('uitgeverij', '')
 				.trim()
+				.split(',')[0]
+				.toLowerCase()
 			return book
 		})
 
@@ -347,5 +372,5 @@ function filterGenre(genre) {
 	state.data.cities = groupCities(data, state.data.coordinates)
 	state.data.amount = data.length
 
-	updateCircles(state.data.cities)
+	updateCircles('map', state.data.cities)
 }

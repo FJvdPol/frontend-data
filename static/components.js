@@ -19,26 +19,6 @@ Vue.component('loader', {
 	template: '<h2>{{ text }}</h2>'
 })
 
-Vue.component('city', {
-	props: ['text'],
-	template: '<li>city: <span>{{ text }}</span></li>'
-})
-
-Vue.component('total', {
-	props: ['text'],
-	template: '<li>Total: <span>{{ text }}</span></li>'
-})
-
-Vue.component('bookrow', {
-	props: ['book'],
-	template:
-		'<li><h4>{{ book.title }}</h4><p>{{ book.publisher ? book.publisher : " " }}</p><p>{{ book.year }}</p></li>'
-})
-Vue.component('test', {
-	props: ['id'],
-	template: '<p>Test: {{this.id}}</p>'
-})
-
 Vue.component('pie-chart', {
 	props: ['data', 'id'],
 	mounted() {
