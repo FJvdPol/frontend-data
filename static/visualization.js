@@ -275,9 +275,11 @@ function showCity(city, index, all) {
 		// .style('stroke', 'var(--color-accent)')
 		.style('opacity', 1)
 
+	// on mobile, put the map center more to the top of the screen to accomodate for the city info div
 	const center = window.innerWidth > 40 * 16
 		? [city.coords[0], city.coords[1]]
-		: [city.coords[0], city.coords[1] - 0.25]
+		: [city.coords[0], city.coords[1] - 0.3]
+
 	map.flyTo({
 		center,
 		speed: 0.3,
@@ -306,6 +308,8 @@ function formatData(results) {
 				.trim()
 				.split(',')[0]
 				.toLowerCase()
+				// https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+				.replace(/^\w/, c => c.toUpperCase())
 			return book
 		})
 

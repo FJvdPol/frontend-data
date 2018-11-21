@@ -11,7 +11,7 @@
 }
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
   color: var(--color-main);
 }
 #map svg {
@@ -64,7 +64,7 @@ body {
   background-color: rgba(255,255,255,0.8);
   justify-content: flex-start;
   align-items: flex-start;
-  z-index: 5;
+  z-index: 1;
 }
 #genre {
   position: fixed;
@@ -104,6 +104,7 @@ body {
 }
 label {
   font-size: 0.875rem;
+  color: var(--color-light);
 }
 select {
   margin-left: 0.5rem;
@@ -120,10 +121,37 @@ select {
 .input-holder {
   display: flex;
   align-items: center;
+  position: relative;
+}
+.input-holder::after {
+  line-height: 1;
+  display: block;
+  content: "v";
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: var(--color-main);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1rem;
+  pointer-events: none;
+}
+
+h2 {
+  color: var(--color-main);
+  font-size: 1.5rem;
+}
+.explanation h2 {
+  font-size: 1rem;
+  font-weight: normal;
+}
+.city h2 {
+  margin-bottom: 0.5rem;
 }
 .city {
   width: 100%;
 }
+
 .city .chart-holder {
   display: flex;
 }
@@ -141,17 +169,6 @@ select {
 }
 .city .pie-holder path:hover {
   opacity: 0.8;
-}
-.city h2 {
-  margin-bottom: 0.5rem;
-}
-h2 {
-  color: var(--color-main);
-  font-size: 1.5rem;
-}
-.explanation h2 {
-  font-size: 1rem;
-  font-weight: normal;
 }
 h3 {
   color: var(--color-light);
@@ -182,6 +199,14 @@ ul {
   position: absolute;
   top: 1.5rem;
   right: 1.5rem;
+  border-bottom: 2px solid var(--color-main);
+  padding: 0;
+  padding-bottom: 0.25rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  min-width: 40px;
 }
 li {
   color: var(--color-light);
@@ -204,7 +229,6 @@ li span {
   z-index: 3;
 }
 .tooltip h4 {
-  text-transform: capitalize;
   margin: 0;
   font-size: 0.75rem;
   font-weight: 300;
@@ -215,6 +239,7 @@ li span {
     width: 100%;
     top: auto; /* 7rem */
     bottom: 0;
+    padding-bottom: 2rem;
     left: 0;
   }
   #genre h1 {
@@ -225,5 +250,8 @@ li span {
   #genre {
     height: auto;
     display: block;
+  }
+  .city .pie-holder h3 {
+    margin-top: 0;
   }
 }
