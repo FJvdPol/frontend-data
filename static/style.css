@@ -122,6 +122,19 @@ select {
   align-items: center;
   padding: 0 0 1.5rem;
 }
+.pie-holder .tooltip {
+  color: var(--color-ultra-light);
+  background-color: var(--color-dark);
+  padding: 0.5rem 0.75rem;
+  border-radius: 25px;
+  pointer-events: none;
+  position: fixed;
+}
+.pie-holder .tooltip h4 {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 300;
+}
 .city h2 {
   margin-bottom: 0.5rem;
 }
@@ -149,7 +162,7 @@ ul {
 }
 .city-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 0;
 }
@@ -167,8 +180,6 @@ ul {
 li {
   color: var(--color-light);
   width: 100%;
-  display: flex;
-  justify-content: space-between;
   line-height: 1.5;
   margin-right: 0.5rem;
 }

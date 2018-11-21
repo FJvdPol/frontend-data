@@ -37,7 +37,7 @@
         <div class="chart-holder">
           <div class="pie-holder">
             <h3>Books of total:</h3>
-            <pie-chart :id="'totalChart'" :data="[city.amount, data.amount]" />
+            <pie-chart :id="'totalChart'" :data="[{title: city.name, total: city.amount}, {title: 'All', total: data.amount}]" />
           </div>
           <div class="pie-holder">
             <h3>Ratio of publishers:</h3>
