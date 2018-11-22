@@ -35,7 +35,7 @@
 
       <div class="city" v-if="city.name && loaded">
 
-        <button @click="city.name = ''" class="close">close</button>
+        <button @click="city.name = ''; showbar = false; fullscreen = false" class="close">close</button>
         <h2>{{city.name}}</h2>
         <ul class="city-info">
           <li>Total books: <span>{{ city.amount }}</span></li>
@@ -60,7 +60,7 @@
       </div>
 
       <div v-if="showbar && city.publishers.length > 1" :class="fullscreen ? 'chart-holder bar visible full' : 'chart-holder bar visible'">
-        <button @click="showbar = !showbar" class="close">close</button>
+        <button @click="showbar = false; fullscreen = false" class="close">close</button>
         <button @click="fullscreen = !fullscreen" style="right: 5rem;" class="close">{{fullscreen ? 'smaller' : 'fullscreen'}}</button>
 
         <h3>Publisher ratio in {{city.name}}:</h3>

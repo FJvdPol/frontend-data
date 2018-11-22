@@ -57,7 +57,8 @@ const helper = {
 			...state.city,
 			name: ''
 		})
-		state.set(data, {
+		state.set('showbar', false)
+		state.set('data', {
 			...state.data,
 			cities: this.groupCities(data, state.data.coordinates),
 			amount: data.length

@@ -124,6 +124,7 @@ select {
   color: var(--color-main);
   text-align: center;
   font-size: 0.875rem;
+  cursor: pointer;
 }
 .input-holder {
   display: flex;
@@ -190,6 +191,7 @@ h2 {
   left: 1.5rem;
   top: 1.5rem;
   min-height: calc(100vh - 3rem);
+  max-height: calc(100vh - 3rem);
   width: calc(100vw - 3rem);
   background-color: var(--color-ultra-light);
 }

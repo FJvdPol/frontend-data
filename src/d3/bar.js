@@ -109,23 +109,25 @@ const bar = {
 			)
 			.on('mouseout', () => tooltip.hide(element))
 			.style('fill', (d, i) => color(i))
-			.attr('x', (d, i) => x(d.title))
+			.attr('x', d => x(d.title))
 			.attr('y', d => this.height() - this.margin.bottom)
 			.attr('height', () => 0)
 			.attr('width', x.bandwidth())
 			.transition()
 			.duration(500)
+			.delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
 			.attr('y', d => y(d.total))
 			.attr('height', d => y(0) - y(d.total))
 
 		rect
 			.style('fill', (d, i) => color(i))
-			.attr('x', (d, i) => x(d.title))
+			.attr('x', d => x(d.title))
 			.attr('y', d => this.height() - this.margin.bottom)
 			.attr('height', () => 0)
 			.attr('width', x.bandwidth())
 			.transition()
 			.duration(500)
+			.delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
 			.attr('y', d => y(d.total))
 			.attr('height', d => y(0) - y(d.total))
 
@@ -133,7 +135,9 @@ const bar = {
 	},
 
 	height() {
-		return this.width() / 2
+		return this.width() / 2 > window.innerHeight - 10 * 16
+			? window.innerHeight - 10 * 16
+			: this.width() / 2
 	},
 
 	width() {

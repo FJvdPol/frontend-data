@@ -1,4 +1,5 @@
 const state = require('../state.js')
+const map = require('../d3/map.js')
 const pie = require('../d3/pie.js')
 const bar = require('../d3/bar.js')
 const helper = require('../helpers/helper.js')
