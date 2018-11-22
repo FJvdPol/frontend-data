@@ -1,14 +1,20 @@
 /* global d3 */
 const state = require('../state.js')
 const helper = {
-	// https://github.com/d3/d3-scale#continuous-scales
-	// http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/
+	/*
+	=== Start source ===
+	Make range of colors to use when rendering items in a bar chart or pie chart
+	Based on examples by Jerome Cukier and the d3 documentation
+	via https://github.com/d3/d3-scale#continuous-scales
+	via http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/
+	*/
 	color(data) {
 		return d3
 			.scaleLinear()
 			.domain([0, Math.round(data.length / 2), data.length])
 			.range(['#BBE4A0', '#52A8AF', '#00305C'])
 	},
+	/* === End source === */
 
 	groupCities(data, coordinates) {
 		const cities = d3
@@ -17,7 +23,7 @@ const helper = {
 			.key(book => book.publication.publisher)
 			.entries(data)
 			.map(city => {
-				// match equals true if city is in coordinates database
+				/* match equals true if city is in coordinates database */
 				const match = coordinates.find(
 					place => place.city.toLowerCase() === city.key.toLowerCase()
 				)
@@ -71,12 +77,12 @@ const helper = {
 		const hasPublication = results[2]
 			.filter(book => book.publication.place && book.publication.publisher)
 			.map(book => {
-				// Make sure random characters are removed from the publication city name
+				/* Make sure random characters are removed from the publication city name */
 				book.publication.place = book.publication.place
 					.replace(/[^a-zA-Z,\s]+/g, '')
 					.trim()
 					.split(',')[0]
-				// Make sure inconsistencies in naming of publishers get grouped together
+				/* Make sure inconsistencies in naming of publishers get grouped together */
 				book.publication.publisher = book.publication.publisher
 					.replace(/[^a-zA-Z,\s]+/g, '')
 					.replace('Uitgeverij', '')
@@ -84,8 +90,14 @@ const helper = {
 					.trim()
 					.split(',')[0]
 					.toLowerCase()
-					// https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+					/*
+					=== Start source ===
+					Capitalize first letter in a string
+					from an example by Josh Tronic
+					via https://joshtronic.com/2016/02/14/how-to-capitalize-the-first-letter-in-a-string-in-javascript/
+					*/
 					.replace(/^\w/, c => c.toUpperCase())
+				/* === End source === */
 				return book
 			})
 
@@ -97,7 +109,7 @@ const helper = {
 		const cities = this.groupCities(hasPublication, coordinates)
 		return {
 			cities: cities,
-			// Here new Set generates an array with only unique values from a different array
+			/* Here new Set generates an array with only unique values from a different array */
 			genres: [...new Set(genres)],
 			amount: hasPublication.length,
 			total: hasPublication,

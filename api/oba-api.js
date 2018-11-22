@@ -1,7 +1,7 @@
 const axios = require('axios')
 const convert = require('xml-to-json-promise')
 
-// Based on the oba api by rijkvanzanten
+// Based on the oba api by Rijk van Zanten (https://github.com/rijkvanzanten)
 
 class API {
 	constructor(options) {
@@ -34,7 +34,7 @@ class API {
 		})
 	}
 
-	// New version written with dennis
+	// New version written with Dennis Wegereef (https://github.com/denniswegereef)
 	// Possible endpoints: search (needs a 'q' parameter) | holdings/root (no parameters)
 	// Params: query parameters in object, check api docs for possibilities
 	// Returns a promise resolving in an array

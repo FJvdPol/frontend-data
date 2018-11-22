@@ -23,7 +23,7 @@ mapbox.on('load', () => {
 	Promise.all([
 		d3.csv('data/codesnetherlands.csv'),
 		d3.csv('data/worldcities.csv'),
-		d3.json('data/wouterdata.json')
+		d3.json('data/data.json')
 	])
 		.then(results => {
 			state.set('data', helper.formatData(results))

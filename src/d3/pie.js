@@ -31,17 +31,22 @@ const pie = {
 
 		const radius = this.width() / 2
 
-		// http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html
+		/*
+		=== Start source ===
+		arc and pie functions to correctly configure pie charts
+		From an example by Chuck Grimmett
+		via http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html
+		*/
 		const arc = d3
 			.arc()
 			.outerRadius(radius)
 			.innerRadius(0)
 
-		// http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html
 		const pie = d3
 			.pie()
 			.sort(null)
 			.value(d => d.total)
+		/* === End source === */
 
 		const chart = d3.select(`#${element} .parent`)
 
@@ -56,7 +61,7 @@ const pie = {
 			)
 			.on('mouseout', () => tooltip.hide(element))
 			.style('fill', (d, i) => color(i))
-			// saves initial arc value // Mike Bostock (https://bl.ocks.org/mbostock/1346410)
+			/* Saves initial arc value, by example from Mike Bostock (https://bl.ocks.org/mbostock/1346410) */
 			.each((d, i, all) => (all[i]._current = d))
 			.transition()
 			.duration(500)
@@ -66,7 +71,6 @@ const pie = {
 			.transition()
 			.style('fill', (d, i) => color(i))
 			.duration(500)
-			// redraw the arcs
 			.attrTween('d', arcTween)
 
 		path.exit().remove()
@@ -77,17 +81,22 @@ const pie = {
 			var i = d3.interpolate({ startAngle: 0, endAngle: 0 }, d)
 			return t => arc(i(t))
 		}
-		// interpolate between previous endpoint of datapoint arc and new endpoint
-		// Mike Bostock (https://bl.ocks.org/mbostock/1346410)
+		/*
+		=== Start source ===
+		Interpolate between previous endpoint of datapoint arc and new endpoint
+		From an example by Mike Bostock
+		via https://bl.ocks.org/mbostock/1346410
+		*/
 		function arcTween(d) {
 			const i = d3.interpolate(this._current, d)
 			this._current = i(0)
 			return t => arc(i(t))
 		}
+		/* === End source === */
 	},
 
-	// Makes sure the pie charts (which are rendered next to eachother) don't exceed their container limit.
-	// On mobile makes sure the charts are half of the viewport with a leftover space of 50 each
+	/* Makes sure the pie charts (which are rendered next to eachother) don't exceed their container limit.
+	 On mobile makes sure the charts are half of the viewport with a leftover space of 50 each */
 	width() {
 		return window.innerWidth - 100 > 40 * 16
 			? 200

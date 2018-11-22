@@ -10,8 +10,14 @@ const map = {
 	create(data, mapbox) {
 		const mapPointColor = '#BBE4A0'
 
-		// Get Mapbox map canvas container // jorditost
+		/*
+		=== Start source ===
+		Get Mapbox map canvas container
+		From an example by jorditost
+		via https://github.com/jorditost/mapboxgl-d3-playground
+		*/
 		const chart = d3.select(this.mapbox.getCanvasContainer())
+		/* === End source === */
 
 		chart
 			.append('div')
@@ -30,13 +36,25 @@ const map = {
 
 		this.move('map')
 
-		// Update on map interaction
+		/*
+		=== Start source ===
+		Update on map interaction
+		From an example by jorditost
+		via https://github.com/jorditost/mapboxgl-d3-playground
+		*/
 		this.mapbox.on('viewreset', () => this.move('map'))
 		this.mapbox.on('move', () => this.move('map'))
 		this.mapbox.on('moveend', () => this.move('map'))
 		this.mapbox.on('zoom', () => this.move('map'))
+		/* === End source === */
 	},
 
+	/*
+	=== Start source ===
+	Move function to update map coordinates for map points
+	From an example by jorditost
+	via https://github.com/jorditost/mapboxgl-d3-playground
+	*/
 	move(element) {
 		d3.select(`#${element} g`)
 			.selectAll('circle')
@@ -46,6 +64,7 @@ const map = {
 			.attr('cy', d => this.project(d.coords).y)
 			.attr('r', d => this.radius(d.total))
 	},
+	/* === End source === */
 
 	update(element, data) {
 		const transition = 300
@@ -91,10 +110,16 @@ const map = {
 			.remove()
 	},
 
+	/*
+	=== Start source ===
+	Projection function to project points on the map based on the current scroll or move state
+	From an example by jorditost
+	via https://github.com/jorditost/mapboxgl-d3-playground
+	*/
 	project(coords) {
-		// Project publishers coordinates to the map's current state // jorditost
 		return this.mapbox.project(new mapboxgl.LngLat(+coords[0], +coords[1]))
 	},
+	/* === End source === */
 
 	radius(amount) {
 		const startZoom = 6
@@ -103,7 +128,9 @@ const map = {
 		return amount * radiusExp + minPointSize > minPointSize
 			? Math.sqrt(amount * radiusExp + minPointSize)
 			: Math.sqrt(minPointSize)
-		// Math.sqrt -> https://developers.google.com/maps/documentation/javascript/examples/circle-simple
+		/*
+		Math.sqrt based on example by google which they use in drawing more true-to-life map points -> https://developers.google.com/maps/documentation/javascript/examples/circle-simple
+		*/
 	}
 }
 

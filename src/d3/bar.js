@@ -25,7 +25,13 @@ const bar = {
 
 		axis.append('g').classed('yAxis', true)
 
-		// axis titles: https://bl.ocks.org/d3noob/23e42c8f67210ac6c678db2cd07a747e
+		/*
+		== Start source ==
+		Appending text to use as axis titles.
+		From an example by d3noob:
+		https://bl.ocks.org/d3noob/23e42c8f67210ac6c678db2cd07a747e
+		Small tweaks to work with my visualisation
+		*/
 		axis
 			.append('text')
 			.attr(
@@ -50,6 +56,7 @@ const bar = {
 			.style('text-anchor', 'middle')
 			.style('color', 'var(--color-main)')
 			.text('Amount of books')
+		/* == End source == */
 
 		svg.append('g').classed('parent', true)
 
@@ -65,7 +72,13 @@ const bar = {
 
 		const rect = chart.selectAll('rect').data(data)
 
-		// start source: https://beta.observablehq.com/@mbostock/d3-bar-chart
+		/*
+		=== Start source ===
+		Bar chart x scale, y scale, x axis and y axis
+		From an example by Mike Bostock
+		via https://beta.observablehq.com/@mbostock/d3-bar-chart
+		Small edits by me to work with my visualisation
+		*/
 		const x = d3
 			.scaleBand()
 			.domain(data.map(d => d.title))
@@ -98,7 +111,7 @@ const bar = {
 		svg.select('.xAxis').call(xAxis)
 
 		svg.select('.yAxis').call(yAxis)
-		// end source
+		/* === End source === */
 
 		rect
 			.enter()
