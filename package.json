@@ -5,6 +5,7 @@
   "main": "server/index.js",
   "dependencies": {
     "axios": "^0.18.0",
+    "browserify": "^16.2.3",
     "cors": "^2.8.5",
     "d3": "^5.7.0",
     "dotenv": "^6.1.0",
@@ -18,9 +19,11 @@
     "xo": "^0.23.0"
   },
   "scripts": {
-    "format": "prettier --write \"./**/*.js\"",
+    "format": "prettier --write \"./src/**/*.js\"",
     "data": "node_modules/.bin/nodemon server/index.js",
-    "xo": "xo"
+    "xo": "xo",
+    "build:js": "browserify src -o static/index.js",
+    "build": "npm run format && npm run build:js"
   },
   "prettier": {
     "semi": false,
