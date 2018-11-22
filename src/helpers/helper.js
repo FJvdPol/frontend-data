@@ -1,6 +1,15 @@
 /* global d3 */
 const state = require('../state.js')
 const helper = {
+	// https://github.com/d3/d3-scale#continuous-scales
+	// http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/
+	color(data) {
+		return d3
+			.scaleLinear()
+			.domain([0, Math.round(data.length / 2), data.length])
+			.range(['#BBE4A0', '#52A8AF', '#00305C'])
+	},
+
 	groupCities(data, coordinates) {
 		const cities = d3
 			.nest()

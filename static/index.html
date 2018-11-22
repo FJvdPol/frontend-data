@@ -31,7 +31,7 @@
 
     </div>
 
-    <div class="metadata-holder">
+    <div :class="metadataClass()">
 
       <div class="city" v-if="city.name && loaded">
 
@@ -41,20 +41,32 @@
           <li>Total books: <span>{{ city.amount }}</span></li>
         </ul>
 
-        <div class="chart-holder">
+        <div class="chart-holder pie">
 
           <div class="pie-holder">
             <h3>Book ratio relative to rest of the world:</h3>
             <pie-chart :id="'totalChart'" :data="[{title: city.name, total: city.amount}, {title: 'Rest of the world', total: data.amount - city.amount}]" />
           </div>
 
-          <div class="pie-holder">
+          <div v-if="!showbar" class="pie-holder">
             <h3>Publisher ratio in {{city.name}}:</h3>
             <pie-chart :id="'publisherChart'" :data="city.publishers" />
           </div>
 
         </div>
 
+        <button v-if="city.publishers.length > 1 && !showbar" id="show-bar" class="btn center" @click="showbar = !showbar">See publisher rate in bar chart</button>
+
+      </div>
+
+      <div v-if="showbar && city.publishers.length > 1" :class="fullscreen ? 'chart-holder bar visible full' : 'chart-holder bar visible'">
+        <button @click="showbar = !showbar" class="close">close</button>
+        <button @click="fullscreen = !fullscreen" style="right: 5rem;" class="close">{{fullscreen ? 'smaller' : 'fullscreen'}}</button>
+
+        <h3>Publisher ratio in {{city.name}}:</h3>
+        <div class="bar-holder">
+          <bar-chart :id="'publisherBarChart'" :data="city.publishers" :screen="fullscreen" />
+        </div>
       </div>
 
       <div class="explanation" v-if="loaded && !city.name">
@@ -72,7 +84,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://d3js.org/d3.v5.js"></script>
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
-  <script src="index.js"></script>
+  <script src="bundle.js"></script>
 
 
 </body>

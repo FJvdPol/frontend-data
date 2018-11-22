@@ -1,5 +1,6 @@
 const state = require('../state.js')
 const pie = require('../d3/pie.js')
+const bar = require('../d3/bar.js')
 const helper = require('../helpers/helper.js')
 
 module.exports = () => {
@@ -21,6 +22,23 @@ module.exports = () => {
 		template: '<div :id="this.id"></div>'
 	})
 
+	Vue.component('bar-chart', {
+		props: ['screen', 'data', 'id'],
+		mounted() {
+			bar.draw(this.id, this.data)
+		},
+		watch: {
+			data() {
+				bar.update(this.id, this.data)
+			},
+			screen() {
+				document.querySelector(`#${this.id}`).innerHTML = ''
+				bar.draw(this.id, this.data)
+			}
+		},
+		template: '<div :id="this.id"></div>'
+	})
+
 	const app = new Vue({
 		el: '#app',
 		data() {
@@ -30,6 +48,14 @@ module.exports = () => {
 			changeFilter: e => {
 				helper.filterGenre(e.target.value)
 				map.update('map', state.data.cities)
+			},
+			metadataClass: () => {
+				if (state.city.name && state.showbar) {
+					return 'metadata-holder city'
+				} else if (state.city.name) {
+					return 'metadata-holder city full'
+				}
+				return 'metadata-holder'
 			}
 		}
 	})

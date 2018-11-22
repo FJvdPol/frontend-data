@@ -1,5 +1,6 @@
 /* global d3 */
 const tooltip = require('./tooltip.js')
+const helper = require('../helpers/helper.js')
 
 const pie = {
 	draw(element, data) {
@@ -26,12 +27,7 @@ const pie = {
 	},
 
 	update(element, data) {
-		// https://github.com/d3/d3-scale#continuous-scales
-		// http://www.jeromecukier.net/2011/08/11/d3-scales-and-color/
-		const color = d3
-			.scaleLinear()
-			.domain([0, Math.round(data.length / 2), data.length])
-			.range(['#BBE4A0', '#52A8AF', '#00305C'])
+		const color = helper.color(data)
 
 		const radius = this.width() / 2
 
@@ -53,8 +49,6 @@ const pie = {
 
 		path
 			.enter()
-			.append('g')
-			.classed('arc', true)
 			.append('path')
 			.attr('title', (d, i) => d.data.title)
 			.on('mouseover', d =>
@@ -95,8 +89,8 @@ const pie = {
 	// Makes sure the pie charts (which are rendered next to eachother) don't exceed their container limit.
 	// On mobile makes sure the charts are half of the viewport with a leftover space of 50 each
 	width() {
-		return (window.innerWidth - 100) / 2 > 150
-			? 150
+		return window.innerWidth - 100 > 40 * 16
+			? 200
 			: (window.innerWidth - 100) / 2
 	}
 }

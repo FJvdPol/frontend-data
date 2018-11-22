@@ -57,14 +57,21 @@ body {
 #app.loaded .metadata-holder {
   left: 1.5rem;
   top: 5.5rem;
-  max-height: 100vh;
-  min-height: 2rem;
+  max-height: calc(100vh - 7rem);
+  min-height: 5rem;
   overflow: hidden;
-  width: 25rem;
+  overflow-y: scroll;
+  width: 20rem;
   background-color: rgba(255,255,255,0.8);
   justify-content: flex-start;
   align-items: flex-start;
   z-index: 1;
+}
+#app.loaded .metadata-holder.city {
+  min-height: calc(50vh);
+}
+#app.loaded .metadata-holder.city.full {
+  min-height: calc(100vh - 7rem);
 }
 #genre {
   position: fixed;
@@ -151,17 +158,11 @@ h2 {
 .city {
   width: 100%;
 }
-
-.city .chart-holder {
-  display: flex;
-}
 .city .pie-holder {
-  width: 50%;
   flex-direction: column;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 0 1.5rem;
 }
 .city .pie-holder path {
   cursor: pointer;
@@ -170,6 +171,29 @@ h2 {
 .city .pie-holder path:hover {
   opacity: 0.8;
 }
+.chart-holder.bar {
+  position: fixed;
+  top: 5.5rem;
+  left: 23rem;
+  width: 0;
+  min-height: 10rem;
+  background-color: rgba(255,255,255,0.8);
+  padding: 1.5rem;
+  opacity: 0;
+  transition: background-color 0.5s, min-height 0.5s, width 0.5s, opacity 0.5s, left 0.5s, top 0.5s;
+}
+.chart-holder.bar.visible {
+  opacity: 1;
+  width: calc((100vw / 1.75) + 3rem);
+}
+.chart-holder.bar.visible.full {
+  left: 1.5rem;
+  top: 1.5rem;
+  min-height: calc(100vh - 3rem);
+  width: calc(100vw - 3rem);
+  background-color: var(--color-ultra-light);
+}
+
 h3 {
   color: var(--color-light);
   font-size: 1rem;
@@ -219,6 +243,9 @@ li span {
   color: var(--color-main);
   font-weight: bold;
 }
+.axis, .axis text {
+  color: var(--color-light);
+}
 .tooltip {
   color: var(--color-ultra-light);
   background-color: var(--color-dark);
@@ -232,6 +259,23 @@ li span {
   margin: 0;
   font-size: 0.75rem;
   font-weight: 300;
+}
+.btn {
+  font-family: inherit;
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  margin: 1rem;
+  border-radius: 25px;
+  background-color: var(--color-dark);
+  color: var(--color-ultra-light);
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 @media screen and (max-width: 40rem){
 
@@ -251,7 +295,16 @@ li span {
     height: auto;
     display: block;
   }
+  .chart-holder.pie {
+    display: flex;
+  }
+  .city .pie-holder {
+    width: 50%;
+  }
   .city .pie-holder h3 {
     margin-top: 0;
+  }
+  #show-bar {
+    display: none;
   }
 }

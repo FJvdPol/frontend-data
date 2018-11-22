@@ -4,6 +4,8 @@ const state = {
 	},
 	loaded: false,
 	currentCity: 0,
+	showbar: false,
+	fullscreen: false,
 	data: {
 		genres: [],
 		amount: 0,

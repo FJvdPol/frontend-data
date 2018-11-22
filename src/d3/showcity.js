@@ -17,6 +17,8 @@ const city = {
 				.sort((a, b) => a.total - b.total)
 		})
 
+		state.city.publishers.length <= 1 ? state.set('showbar', false) : false
+
 		// Make the clicked circle full color
 		d3.selectAll('circle').style('opacity', '')
 		d3.select(all[index]).style('opacity', 1)

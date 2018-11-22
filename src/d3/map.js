@@ -100,8 +100,8 @@ const map = {
 		const startZoom = 6
 		const minPointSize = 15
 		const radiusExp = (this.mapbox.getZoom() - startZoom) * 0.75 + 1
-		return (amount * radiusExp) / 2 + minPointSize > minPointSize
-			? Math.sqrt((amount * radiusExp) / 2 + minPointSize)
+		return amount * radiusExp + minPointSize > minPointSize
+			? Math.sqrt(amount * radiusExp + minPointSize)
 			: Math.sqrt(minPointSize)
 		// Math.sqrt -> https://developers.google.com/maps/documentation/javascript/examples/circle-simple
 	}
