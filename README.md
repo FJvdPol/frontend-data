@@ -23,12 +23,6 @@ This project uses [vue](https://vuejs.org/) and [d3.js](https://d3js.org/).
 # clone the repo
 git clone https://fjvdpol.github.com/frontend-data
 
-# Create a .env file
-touch .env
-
-# Add public key to the .env file (obv you need to get your hands on your own public key from the OBA)
-echo "PUBLIC=0123456789" >> .env
-
 # Install dependencies
 npm install
 
@@ -42,9 +36,17 @@ http-server static
 ## Data
 The data used in this process consists of a selection of ~4200 books from the OBA in a JSON file, kindly made available by [maanlamp](https://github.com/maanlamp).
 Inside this project is a way to get your own set of data, but i would not recommend it since it will output in a format that can't be used by the current visualisation (it's on my to-do list...)
-If you do want to generate a custom data file, just run
-`node server`
-in the root folder of the project.
+If you do want to generate a custom data file, just run the following code at the root folder of the project in your terminal:
+```bash
+# Create a .env file
+touch .env
+
+# Add public key to the .env file (obv you need to get your hands on your own public key from the OBA)
+echo "PUBLIC=0123456789" >> .env
+
+# Start the server which generates a data.json file in static/data.json
+node server
+```
 I've chosen to use maanlamp's selection since it provided a nice big dataset with alot of different types of books.
 
 ## Prototype
