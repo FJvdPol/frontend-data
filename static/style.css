@@ -176,6 +176,7 @@ h2 {
   opacity: 0.8;
 }
 .chart-holder.bar {
+  pointer-events: none;
   position: fixed;
   top: 5.5rem;
   left: 23rem;
@@ -187,6 +188,8 @@ h2 {
   transition: background-color 0.5s, min-height 0.5s, width 0.5s, opacity 0.5s, left 0.5s, top 0.5s;
 }
 .chart-holder.bar.visible {
+  pointer-events: all;
+  z-index: 7;
   opacity: 1;
   width: calc((100vw / 1.75) + 3rem);
 }
