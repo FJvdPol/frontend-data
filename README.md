@@ -12,9 +12,9 @@ This project uses [vue](https://vuejs.org/) and [d3.js](https://d3js.org/).
 - [Data](#data)
 - [Prototype](#prototype)
 - [Process](#process)
-  - [Wireframes](#process-high-fidelity-wireframes)
-  - [Final concept](#process-final-concept)
-  - [Code](#process-code-journey)
+  - [Wireframes](#high-fidelity-wireframes)
+  - [Final concept](#final-concept)
+  - [Code](#code-journey)
 - [To do](#to-do)
 - [Credits](#credits)
 
@@ -98,7 +98,7 @@ I wanted to show the total amount of books per country from all the books within
 After a bit of brainstorming and talking to laurens I settled on making a datavisualisation which first plots the countries where books are published. Once clicked on a country the locations of publishers are plotted on the country map. Every publisher dot will be bigger or smaller depending on the amount of books they published that are present in the OBA stock. Clicking on a publisher will show metadata about the publisher and compare the publisher in a pie chart to the rest of the publishers in that country.
 Clicking on any slice of the pie chart will move the focus to that specific publisher.
 
-### Process: High fidelity wireframes
+### High fidelity wireframes
 *(these are wireframes, not the final product)*  
 
 To further envision this concept I made a few wireframes. I intend the project to start as a relatively bare world map, where you can see where the books that are in the OBA API come from. The bigger the circle on a country, the more books/publishers (still deciding) come from that country.
@@ -118,14 +118,14 @@ If I have enough time I'd like to add charts that show the ratio of languages an
 ![map overview europe](docs/wireframe-3.png)
 
 ---
-### Process: Final concept
+### Final concept
 After presenteing my wireframes to my peers, the idea arose to cluster the publishers per city. This meant showing one dot per city instead of one per publisher. When clicking on one of the city dots, two pie charts will show up. The first chart shows the ratio of the total books of that city in relation to the rest of the world. The next one shows the ratio of publishers in relation to eachother in that city.
 
 In the end I also decided to add a bar chart for the ratio between publishers in a specific city, which sometimes helps to better show the absolute values relative to eachoter.
 
 I left the original pie chart showing the relation between publishers in the product because it works better than a bar chart for mobile users.
 
-### Process: Code Journey
+### Code Journey
 I started with setting up this project by adding eslint and xo, because I never really worked with linters or bug-prevention scripts.
 
 After that was up and running,  I started out with a project that didn't need any compiling. I wrote all the functionality in one or two JS files and included dependencies like d3 inline in ```static/index.html```.   
@@ -157,20 +157,20 @@ I installed and configured [browserify]('https://github.com/browserify/browserif
 It didn't work properly, and [wooorm](https://github.com/wooorm) pointed out that I needed a single entry file to perform browserify on, instead of trying to browserify the complete src folder.   
 After browserify was working properly I added babelify to make sure my prototype works in most browsers.
 
-## To-do
-* [ ] Small design tweaks to fix small visual errors and overflows
-* [ ] Show somewhere how many books where not located because their city is not in the `data/*.csv` files
-* [ ] Adding uglify-js to minify my `static/bundle.js`
-* [ ] Possibly adding [LocationIQ API](https://locationiq.com/) for looking up coordinates, instead of using static csv files
-* [ ] Fetch more books from the API
-* [ ] Rewrite the generating of JSON from responses of the API to resemble [maanlamp](https://github.com/maanlamp)'s structure
+## To do
+- [ ] Small design tweaks to fix small visual errors and overflows
+- [ ] Show somewhere how many books where not located because their city is not in the `data/*.csv` files
+- [ ] Adding uglify-js to minify my `static/bundle.js`
+- [ ] Possibly adding [LocationIQ API](https://locationiq.com/) for looking up coordinates, instead of using static csv files
+- [ ] Fetch more books from the API
+- [ ] Rewrite the generating of JSON from responses of the API to resemble [maanlamp](https://github.com/maanlamp)'s structure
 
 ## Credits
 *(in no particular order)*
-* [wooorm](https://github.com/wooorm) - Insights on browserify, bar charts instead of pie charts
-* [mbostock](https://github.com/mbostock) - Examples of pie charts and bar charts by the maker of d3.js himself
-* [chuck grimett](http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html) - Making pie charts made easy
-* [denniswegereef](https://github.com/denniswegereef) - Wrote big parts of the api file in this project, was always available to help me.
-* [timruiterkamp](https://github.com/timruiterkamp) - Showed me the amazing ways of mapbox. Was also making a project with a map so we were able to help eachoter!
-* [maanlamp](https://github.com/maanlamp) - Provided a nicely sized dataset
-* [jorditost](https://github.com/jorditost) - Made awesome examples of combining d3.js with mapbox
+- [wooorm](https://github.com/wooorm) - Insights on browserify, bar charts instead of pie charts
+- [mbostock](https://github.com/mbostock) - Examples of pie charts and bar charts by the maker of d3.js himself
+- [chuck grimett](http://www.cagrimmett.com/til/2016/08/19/d3-pie-chart.html) - Making pie charts made easy
+- [denniswegereef](https://github.com/denniswegereef) - Wrote big parts of the api file in this project, was always available to help me.
+- [timruiterkamp](https://github.com/timruiterkamp) - Showed me the amazing ways of mapbox. Was also making a project with a map so we were able to help eachoter!
+- [maanlamp](https://github.com/maanlamp) - Provided a nicely sized dataset
+- [jorditost](https://github.com/jorditost) - Made awesome examples of combining d3.js with mapbox
