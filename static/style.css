@@ -309,4 +309,7 @@ li span {
   #show-bar {
     display: none;
   }
+  #app.loaded .metadata-holder.city.full {
+    min-height: calc(50vh + 3rem);
+  }
 }

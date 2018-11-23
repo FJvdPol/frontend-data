@@ -62,7 +62,7 @@
     "url": "git+https://github.com/FJvdPol/frontend-data.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/FJvdPol/frontend-data/issues"
   },
