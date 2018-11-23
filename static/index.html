@@ -59,22 +59,22 @@
 
       </div>
 
-      <div v-if="showbar && city.publishers.length > 1" :class="fullscreen ? 'chart-holder bar visible full' : 'chart-holder bar visible'">
-        <button @click="showbar = false; fullscreen = false" class="close">close</button>
-        <button @click="fullscreen = !fullscreen" style="right: 5rem;" class="close">{{fullscreen ? 'smaller' : 'fullscreen'}}</button>
-
-        <h3>Publisher ratio in {{city.name}}:</h3>
-        <div class="bar-holder">
-          <bar-chart :id="'publisherBarChart'" :data="city.publishers" :screen="fullscreen" />
-        </div>
-      </div>
-
       <div class="explanation" v-if="loaded && !city.name">
         <h2>Click on any bubble to see the city name and total amount of books from there</h2>
       </div>
 
       <loader v-if="!loaded" :text="'Loading data...'"></loader>
 
+    </div>
+
+    <div v-if="showbar && city.publishers.length > 1" :class="fullscreen ? 'chart-holder bar visible full' : 'chart-holder bar visible'">
+      <button @click="showbar = false; fullscreen = false" class="close">close</button>
+      <button @click="fullscreen = !fullscreen" style="right: 5rem;" class="close">{{fullscreen ? 'smaller' : 'fullscreen'}}</button>
+
+      <h3>Publisher ratio in {{city.name}}:</h3>
+      <div class="bar-holder">
+        <bar-chart :id="'publisherBarChart'" :data="city.publishers" :screen="fullscreen" />
+      </div>
     </div>
 
 
