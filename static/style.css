@@ -54,6 +54,9 @@ body {
   background-color: rgba(255,255,255,0.6);
   transition: width 0.8s, min-height 0.8s, height 0.5s, top 0.8s, left 0.8s, background-color 0.3s;
 }
+#app .metadata-holder::-webkit-scrollbar {
+  display: none;
+}
 #app.loaded .metadata-holder {
   left: 1.5rem;
   top: 5.5rem;
