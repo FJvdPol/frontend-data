@@ -20,7 +20,6 @@ body {
   width: 100%;
 }
 #map circle {
-  opacity: 0.5;
   stroke-width: 0;
   cursor: pointer;
   transition: 0.5s fill, 0.5s stroke, 0.5s stroke-width, 0.5s opacity;

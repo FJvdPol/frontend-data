@@ -56,8 +56,7 @@ const helper = {
 		}
 
 		d3.selectAll('circle')
-			.style('fill', '')
-			.style('stroke', '')
+			.style('opacity', '0.5')
 
 		state.set('city', {
 			...state.city,

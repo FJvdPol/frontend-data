@@ -20,7 +20,7 @@ const city = {
 		state.city.publishers.length <= 1 ? state.set('showbar', false) : false
 
 		/* Make the clicked circle full color */
-		d3.selectAll('circle').style('opacity', '')
+		d3.selectAll('circle').style('opacity', 0.5)
 		d3.select(all[index]).style('opacity', 1)
 
 		/* On mobile, put the map center more to the top of the screen to accomodate for the city info div */

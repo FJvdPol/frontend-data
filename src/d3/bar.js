@@ -68,10 +68,6 @@ const bar = {
 
 		const svg = d3.select(`#${element} svg`)
 
-		const chart = d3.select(`#${element} .parent`)
-
-		const rect = chart.selectAll('rect').data(data)
-
 		/*
 		=== Start source ===
 		Bar chart x scale, y scale, x axis and y axis
@@ -113,38 +109,37 @@ const bar = {
 		svg.select('.yAxis').call(yAxis)
 		/* === End source === */
 
-		rect
-			.enter()
-			.append('rect')
-			.attr('title', (d, i) => d.title)
-			.on('mouseover', d =>
-				tooltip.show(element, `${d.title}: ${d.total} books`)
-			)
-			.on('mouseout', () => tooltip.hide(element))
-			.style('fill', (d, i) => color(i))
-			.attr('x', d => x(d.title))
-			.attr('y', d => this.height() - this.margin.bottom)
-			.attr('height', () => 0)
-			.attr('width', x.bandwidth())
-			.transition()
-			.duration(500)
-			.delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
-			.attr('y', d => y(d.total))
-			.attr('height', d => y(0) - y(d.total))
+		const chart = d3.select(`#${element} .parent`)
+
+		const rect = chart.selectAll('rect').data(data)
 
 		rect
-			.style('fill', (d, i) => color(i))
-			.attr('x', d => x(d.title))
-			.attr('y', d => this.height() - this.margin.bottom)
-			.attr('height', () => 0)
-			.attr('width', x.bandwidth())
+			.enter().append('rect')
+				.attr('title', (d, i) => d.title)
+				.on('mouseover', d =>
+					tooltip.show(element, `${d.title}: ${d.total} books`)
+				)
+				.on('mouseout', () => tooltip.hide(element))
+				/* merge function learned from this great video by Curran Kelleher: https://www.youtube.com/watch?v=IyIAR65G-GQ */
+			.merge(rect)
+				.attr('width', x.bandwidth())
+				.attr('height', 0)
+				.attr('x', d => x(d.title))
+				.attr('y', d => this.height() - this.margin.bottom)
+				.style('fill', (d, i) => color(i))
+				.transition()
+				.duration(500)
+				.delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
+				.attr('y', d => y(d.total))
+				.attr('height', d => y(0) - y(d.total))
+
+		rect
+			.exit()
 			.transition()
 			.duration(500)
-			.delay((d, i, all) => i * (Math.round(100 / all.length) + 1))
-			.attr('y', d => y(d.total))
-			.attr('height', d => y(0) - y(d.total))
-
-		rect.exit().remove()
+			.attr('height', 0)
+			.attr('y', d => this.height() - this.margin.bottom)
+			.remove()
 	},
 
 	height() {

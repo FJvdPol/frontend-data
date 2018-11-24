@@ -50,7 +50,7 @@ const pie = {
 
 		const chart = d3.select(`#${element} .parent`)
 
-		const path = chart.selectAll('path').data(pie(data))
+		const path = chart.selectAll('path').data(pie(data), (d, i) => 'path' + i)
 
 		path
 			.enter()

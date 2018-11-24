@@ -67,47 +67,36 @@ const map = {
 	/* === End source === */
 
 	update(element, data) {
-		const transition = 300
+		const duration = 500
 
 		const chart = d3.select(`#${element} svg g`)
 
-		const circles = chart.selectAll('circle').data(data)
+		const circles = chart.selectAll('circle').data(data, d => d.key)
 
 		circles
-			.transition()
-			.duration(transition)
-			.attr('r', 0)
-			.transition()
-			.duration(0)
-			.attr('cx', d => this.project(d.coords).x)
-			.attr('cy', d => this.project(d.coords).y)
-			.transition()
-			.duration(transition)
-			.attr('r', d => this.radius(d.total))
-
-		circles
-			.enter()
-			.append('circle')
-			.attr('r', 0)
-			.attr('cx', d => this.project(d.coords).x)
-			.attr('cy', d => this.project(d.coords).y)
-			.on('mouseover', d => tooltip.show(element, `${d.key}: ${d.total} books`))
-			.on('mouseout', () => tooltip.hide(element))
-			.on('click', (d, i, all) => {
-				tooltip.hide(element)
-				city.show(d, i, all)
-			})
-			.transition()
-			.delay(transition)
-			.duration(transition)
-			.attr('r', d => this.radius(d.total))
+			.enter().append('circle')
+				.on('mouseover', d => tooltip.show(element, `${d.key}: ${d.total} books`))
+				.on('mouseout', () => tooltip.hide(element))
+				.on('click', (d, i, all) => {
+					tooltip.hide(element)
+					city.show(d, i, all)
+				})
+				.attr('r', 0)
+				.attr('cx', d => this.project(d.coords).x)
+				.attr('cy', d => this.project(d.coords).y)
+				.style('opacity', 0.5)
+				/* merge function learned from this great video by Curran Kelleher: https://www.youtube.com/watch?v=IyIAR65G-GQ */
+			.merge(circles)
+				.transition()
+				.duration(duration)
+				.attr('r', d => this.radius(d.total))
 
 		circles
 			.exit()
-			.transition()
-			.duration(transition)
-			.attr('r', 0)
-			.remove()
+				.transition()
+				.duration(duration)
+				.attr('r', 0)
+				.remove()
 	},
 
 	/*
