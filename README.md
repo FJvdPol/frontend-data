@@ -4,7 +4,7 @@
 Datavisualisation of the origin of books from the [OBA](https://oba.nl/) (The main public library in Amsterdam). Shows where books are from and how many books are from that same city. Shows charts per city which show the ratio of books from the same publisher.
 This project uses [vue](https://vuejs.org/) and [d3.js](https://d3js.org/).
 
-[check out the prototype](https://fjvdpol.github.io/frontend-data/static)
+[check out the prototype](https://follywolly.github.io/frontend-data/static)
 
 ## Table of contents
 
@@ -21,7 +21,7 @@ This project uses [vue](https://vuejs.org/) and [d3.js](https://d3js.org/).
 ## Install
 ```bash
 # clone the repo
-git clone https://fjvdpol.github.com/frontend-data
+git clone https://follywolly.github.com/frontend-data
 
 # Install dependencies
 npm install
@@ -50,7 +50,7 @@ node server
 I've chosen to use maanlamp's selection since it provided a nice big dataset with alot of different types of books.
 
 ## Prototype
-[check the live prototype here](https://fjvdpol.github.io/frontend-data/static)
+[check the live prototype here](https://follywolly.github.io/frontend-data/static)
 
 When loading up the prototype the first state you will encounter is a map, with the Netherlands in the center.
 
@@ -92,7 +92,7 @@ You can also zoom out and explore where books of the OBA come from from all over
 ![state 8](docs/prototype-8.png)
 
 ## Process
-After the [previous project](https://github.com/fjvdpol/functional-programming), I had to find a new interesting way to sort the entries from the OBA API.
+After the [previous project](https://github.com/follywolly/functional-programming), I had to find a new interesting way to sort the entries from the OBA API.
 I've always been the most impressed by datavisualisations using maps, so I decided to use the publication location of books as my entry point.
 
 I wanted to show the total amount of books per country from all the books within a genre from the OBA API, so I started looking for a way to generate a map which was able to give me plenty of scaling options. I ended up with [mapbox](https://www.mapbox.com/), after that website was shown to me by [timruiterkamp](https://github.com/timruiterkamp). I customized a style for the map and loaded it into this project.
